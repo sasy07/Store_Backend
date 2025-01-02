@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Store.Application.Contracts;
 using Store.Infrastructure.Persistence;
 
 namespace Store.Infrastructure;
@@ -14,6 +15,7 @@ public static class ConfigureService
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
         });
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         return services;
     }
 }

@@ -14,5 +14,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        modelBuilder.Entity<Product>().HasQueryFilter(x => !x.IsDelete);
+        modelBuilder.Entity<ProductBrand>().HasQueryFilter(x => !x.IsDelete);
+        modelBuilder.Entity<ProductType>().HasQueryFilter(x => !x.IsDelete);
     }
 }
