@@ -4,7 +4,7 @@ using Store.Domain.Entities;
 
 namespace Store.Application.Features.ProductBrands.Queries.GetAll;
 
-public class GetAllProductBrandsQueryHandler : IRequestHandler<GetAllProductBrandQuery,IEnumerable<ProductBrand>>
+public class GetAllProductBrandsQueryHandler : IRequestHandler<GetAllProductBrandQuery, IEnumerable<ProductBrand>>
 {
     private readonly IUnitOfWork _uow;
 
@@ -15,5 +15,8 @@ public class GetAllProductBrandsQueryHandler : IRequestHandler<GetAllProductBran
 
     public async Task<IEnumerable<ProductBrand>> Handle(GetAllProductBrandQuery request,
         CancellationToken cancellationToken)
-        => await _uow.Repository<ProductBrand>().GetAllAsync(cancellationToken);
+    {
+        var spec = new ProductBrandSpec();
+        return await _uow.Repository<ProductBrand>().ListAsyncSpec(spec, cancellationToken);
+    }
 }

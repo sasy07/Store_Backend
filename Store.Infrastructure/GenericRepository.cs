@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Store.Application.Contracts;
+using Store.Application.Contracts.Specification;
 using Store.Domain.Entities.Base;
 using Store.Infrastructure.Persistence;
 
@@ -49,4 +50,13 @@ public class GenericRepository<T> : IGenericRepository<T>
 
     public async Task<bool> AnyAsync(CancellationToken cancellationToken)
         => await _dbSet.AnyAsync(cancellationToken);
+
+    public async Task<T> GetEntityWithSpec(ISpecification<T> spec, CancellationToken cancellationToken)
+        => await ApplySpecification(spec).FirstOrDefaultAsync(cancellationToken);
+
+    public async Task<IReadOnlyList<T>> ListAsyncSpec(ISpecification<T> spec, CancellationToken cancellationToken) 
+        => await ApplySpecification(spec).ToListAsync(cancellationToken);
+
+    private IQueryable<T> ApplySpecification(ISpecification<T> spec)
+        => SpecificationEvaluator<T>.GetQuery(_dbSet.AsQueryable(), spec);
 }

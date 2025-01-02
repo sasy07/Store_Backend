@@ -1,10 +1,11 @@
 ﻿using MediatR;
 using Store.Application.Contracts;
+using Store.Application.Features.Products.Queries.GetAll;
 using Store.Domain.Entities;
 
 namespace Store.Application.Features.Products.Queries.Get;
 
-public class GetProductQueryHandler:IRequestHandler<GetProductQuery , Product>
+public class GetProductQueryHandler : IRequestHandler<GetProductQuery, Product>
 {
     private readonly IUnitOfWork _uow;
 
@@ -15,9 +16,7 @@ public class GetProductQueryHandler:IRequestHandler<GetProductQuery , Product>
 
     public async Task<Product> Handle(GetProductQuery request, CancellationToken cancellationToken)
     {
-        var entity = await _uow.Repository<Product>().GetByIdAsync(request.Id, cancellationToken);
-        //TODO : Handle Exception 
-        if (entity == null) throw new Exception("error ... ");
-        return entity;
+        var spec = new GetAllProductsSpec();
+        return await _uow.Repository<Product>().GetEntityWithSpec(spec, cancellationToken);
     }
 }

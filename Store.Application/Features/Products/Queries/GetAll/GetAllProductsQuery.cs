@@ -7,4 +7,3 @@ public class GetAllProductsQuery : IRequest<IEnumerable<Product>>
 {
     public int PageId { get; set; }
 }
-

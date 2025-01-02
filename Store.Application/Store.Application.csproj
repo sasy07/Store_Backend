@@ -12,7 +12,9 @@
 
     <ItemGroup>
       <Folder Include="Common\" />
-      <Folder Include="Dtos\" />
+      <Folder Include="Dtos\ProductTypes\" />
+      <Folder Include="Dtos\ProductBrands\" />
+      <Folder Include="Dtos\Products\" />
       <Folder Include="Features\Products\Commands\" />
       <Folder Include="Interfaces\" />
     </ItemGroup>

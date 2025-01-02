@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Store.Application.Contracts.Specification;
 using Store.Domain.Entities.Base;
 
 namespace Store.Application.Contracts;
@@ -12,4 +13,7 @@ public interface IGenericRepository<T> where T : BaseEntity
     Task Delete(T entity, CancellationToken cancellationToken);
     Task<bool> AnyAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken);
     Task<bool> AnyAsync(CancellationToken cancellationToken);
+
+    Task<T> GetEntityWithSpec(ISpecification<T> spec, CancellationToken cancellationToken);
+    Task<IReadOnlyList<T>> ListAsyncSpec(ISpecification<T> spec, CancellationToken cancellationToken);
 }
